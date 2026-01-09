@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Package, MessageSquare, LogOut, Pencil, Trash2, ImageIcon } from "lucide-react";
+import { Plus, Package, MessageSquare, LogOut, Pencil, Trash2, ImageIcon, Tag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 
 interface Product {
@@ -18,6 +19,8 @@ interface Product {
   stock: number;
   images: string[];
   created_at: string;
+  is_special: boolean;
+  special_price: number | null;
 }
 
 interface Enquiry {
@@ -47,6 +50,8 @@ export const AdminDashboard = () => {
     category: "",
     stock: "",
     images: [] as string[],
+    is_special: false,
+    special_price: "",
   });
 
   useEffect(() => {
@@ -133,6 +138,8 @@ export const AdminDashboard = () => {
       category: "",
       stock: "",
       images: [],
+      is_special: false,
+      special_price: "",
     });
     setEditingProduct(null);
     setShowProductForm(false);
@@ -147,6 +154,8 @@ export const AdminDashboard = () => {
       category: product.category,
       stock: product.stock.toString(),
       images: product.images || [],
+      is_special: product.is_special,
+      special_price: product.special_price?.toString() || "",
     });
     setShowProductForm(true);
   };
@@ -167,6 +176,10 @@ export const AdminDashboard = () => {
       stock: parseInt(productForm.stock) || 0,
       images: productForm.images,
       created_by: user?.id,
+      is_special: productForm.is_special,
+      special_price: productForm.is_special && productForm.special_price 
+        ? parseFloat(productForm.special_price) 
+        : null,
     };
 
     if (editingProduct) {
@@ -295,9 +308,21 @@ export const AdminDashboard = () => {
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium truncate">{product.name}</h3>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-medium truncate">{product.name}</h3>
+                          {product.is_special && (
+                            <Badge className="bg-destructive text-destructive-foreground shrink-0">
+                              <Tag className="h-3 w-3 mr-1" />
+                              Special
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-muted-foreground">
-                          ${product.price} · {product.stock} in stock · {product.category}
+                          R{product.price}
+                          {product.is_special && product.special_price && (
+                            <span className="text-destructive"> → R{product.special_price}</span>
+                          )}
+                          {" "}· {product.stock} in stock · {product.category}
                         </p>
                       </div>
                       <div className="flex gap-2 shrink-0">
@@ -386,6 +411,44 @@ export const AdminDashboard = () => {
                       placeholder="0"
                     />
                   </div>
+                </div>
+
+                {/* Special/Sale Toggle */}
+                <div className="bg-muted/50 rounded-lg p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Mark as Special/Sale</label>
+                      <p className="text-xs text-muted-foreground">
+                        Highlight this product with a sale badge
+                      </p>
+                    </div>
+                    <Switch
+                      checked={productForm.is_special}
+                      onCheckedChange={(checked) => 
+                        setProductForm({ ...productForm, is_special: checked })
+                      }
+                    />
+                  </div>
+                  
+                  {productForm.is_special && (
+                    <div>
+                      <label className="text-sm font-medium mb-1.5 block">
+                        Special Price (optional)
+                      </label>
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={productForm.special_price}
+                        onChange={(e) => 
+                          setProductForm({ ...productForm, special_price: e.target.value })
+                        }
+                        placeholder="Leave empty for badge only"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Must be less than R{productForm.price || "0"}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Image Upload */}
