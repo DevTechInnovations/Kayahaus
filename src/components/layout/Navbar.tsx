@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShoppingBag, User } from "lucide-react";
+import { Menu, X, User } from "lucide-react"; 
 import { Button } from "@/components/ui/button";
+import logo from "../images/WhatsApp Image 2026-01-08 at 10.04.23.jpeg";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -21,9 +22,13 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <ShoppingBag className="h-7 w-7 text-primary" />
+            <img 
+              src={logo} 
+              alt="Your Logo" 
+              className="h-15 w-auto md:h-20"
+            />
             <span className="font-display text-xl md:text-2xl font-semibold text-foreground">
-              Artisan
+              KayaHaus
             </span>
           </Link>
 
@@ -33,13 +38,17 @@ export const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
+                className={`relative text-sm font-medium transition-colors hover:text-primary ${
                   location.pathname === link.path
                     ? "text-primary"
                     : "text-muted-foreground"
                 }`}
               >
                 {link.name}
+                {/* Active indicator underline */}
+                {location.pathname === link.path && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                )}
               </Link>
             ))}
           </div>
@@ -77,13 +86,17 @@ export const Navbar = () => {
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className={`text-base font-medium transition-colors hover:text-primary ${
+                  className={`relative text-base font-medium transition-colors hover:text-primary ${
                     location.pathname === link.path
                       ? "text-primary"
                       : "text-muted-foreground"
                   }`}
                 >
                   {link.name}
+                  {/* Active indicator for mobile */}
+                  {location.pathname === link.path && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full" />
+                  )}
                 </Link>
               ))}
               <Link to="/admin" onClick={() => setIsOpen(false)}>
