@@ -105,7 +105,8 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
 
         <div className="grid md:grid-cols-2 gap-0">
           {/* Image Gallery */}
-          <div className="relative bg-muted">
+          <div className="bg-muted flex flex-col">
+            {/* Main Image */}
             <div className="relative w-full" style={{ paddingBottom: '100%' }}>
               {hasImages ? (
                 <img
@@ -133,22 +134,41 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
-
-                  {/* Thumbnails */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                    {product.images.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`w-2 h-2 rounded-full transition-colors ${
-                          index === currentImageIndex ? "bg-primary" : "bg-card/60"
-                        }`}
-                      />
-                    ))}
-                  </div>
                 </>
               )}
             </div>
+
+            {/* Thumbnail Gallery */}
+            {hasImages && product.images.length > 1 && (
+              <div className="flex gap-2 p-3 overflow-x-auto">
+                {product.images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
+                      index === currentImageIndex 
+                        ? "border-primary ring-2 ring-primary/20" 
+                        : "border-transparent hover:border-primary/50"
+                    }`}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Description below image */}
+            {product.description && (
+              <div className="p-4 bg-card/50 border-t border-border">
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Content */}
@@ -182,11 +202,6 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
               )}
             </div>
 
-            {product.description && (
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                {product.description}
-              </p>
-            )}
 
             {/* Fabric Selection */}
             {hasFabrics && (
