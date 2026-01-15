@@ -105,8 +105,8 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
 
         <div className="grid md:grid-cols-2 gap-0">
           {/* Image Gallery */}
-          <div className="relative bg-muted">
-            <div className="aspect-square">
+          <div className="relative bg-muted flex-shrink-0">
+            <div className="aspect-square w-full">
               {hasImages ? (
                 <img
                   src={product.images[currentImageIndex]}
