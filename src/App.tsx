@@ -22,7 +22,7 @@ const App = () => (
       <TooltipProvider>
       <Toaster />
       <Sonner />
-      <WhatsAppButton phoneNumber="27123456789" />
+      <WhatsAppButton phoneNumber="27785749329" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
