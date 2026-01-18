@@ -124,43 +124,58 @@ const ProductEnquiry = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
     setIsSubmitting(true);
 
-    // Build message with selected options
-    let messageWithOptions = formData.message;
-    if (selectedFabric || selectedColor) {
-      const options = [];
-      if (selectedFabric) options.push(`Fabric: ${selectedFabric}`);
-      if (selectedColor) options.push(`Color: ${selectedColor}`);
-      messageWithOptions = `[Selected: ${options.join(", ")}]\n\n${formData.message}`;
+    try {
+      const response = await fetch("http://localhost:5000/api/product-enquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          product: {
+            id: product.id,
+            name: product.name,
+          },
+          color: selectedColor || null,
+          fabric: selectedFabric || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to send enquiry");
+      }
+
+      toast({
+        title: "Enquiry Sent",
+        description: "We’ll get back to you shortly.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+
+      // optional: clear selected options if you want
+      // setSelectedColor(null);
+      // setSelectedFabric(null);
+    } catch (error) {
+      console.error("Enquiry error:", error);
+      toast({
+        title: "Failed to send enquiry",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    const { error } = await supabase.from("enquiries").insert({
-      product_id: product.id,
-      product_name: product.name,
-      customer_name: formData.name,
-      customer_email: formData.email,
-      customer_phone: formData.phone || null,
-      message: messageWithOptions,
-    });
-
-    if (error) {
-      console.error("Error submitting enquiry:", error);
-      toast.error("Failed to send enquiry. Please try again.");
-    } else {
-      toast.success("Enquiry sent successfully! We'll get back to you soon.");
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    }
-
-    setIsSubmitting(false);
   };
 
   return (
