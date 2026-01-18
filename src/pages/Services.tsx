@@ -1,35 +1,35 @@
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Palette, Gift, Home, Sparkles, ArrowRight } from "lucide-react";
+import { Palette, ArrowRight, Wrench, Tv, Sofa } from "lucide-react";
 
 const services = [
-  {
+ {
     icon: Palette,
     title: "Custom Creations",
-    description: "Work with our artisans to design a unique piece tailored to your vision. From ceramics to textiles, we bring your ideas to life.",
+    description: "Work with our artisans to design a unique piece tailored to your vision. From ceramics to textiles, we bring your ideas to life. Perfect for heirlooms, statement pieces, or personal expressions of creativity.",
     features: ["Personal consultation", "Design collaboration", "Handcrafted to order", "Unique, one-of-a-kind pieces"],
     price: "Contact for pricing",
   },
   {
-    icon: Gift,
-    title: "Corporate Gifting",
-    description: "Impress clients and employees with thoughtful, handcrafted gifts. We offer bulk orders with custom branding options.",
-    features: ["Curated gift sets", "Custom packaging", "Bulk discounts", "Branded inserts available"],
-    price: "Contact for pricing",
+    icon: Wrench,
+    title: "Kitchen Fittings",
+    description: "Custom-designed modern kitchens tailored to your space. We handle cabinetry, finishes, and installation with a focus on clean lines, functionality, and premium materials.",
+    features: ["Space-optimized cabinetry", "Premium material finishes", "Full installation service", "Functional layout planning"],
+    price: "Project-based quote",
   },
   {
-    icon: Home,
-    title: "Interior Styling",
-    description: "Let our experts help you choose the perfect artisan pieces for your space. Virtual and in-person consultations available.",
-    features: ["Room assessments", "Product recommendations", "Color & style matching", "Layout suggestions"],
-    price: "Contact for pricing",
+    icon: Tv,
+    title: "Modern Floating TV Stands",
+    description: "Bespoke floating fitted TV units designed for contemporary interiors. Made-to-measure, minimalist, and engineered for a seamless, luxury look.",
+    features: ["Custom measurements", "Minimalist design", "Hidden cable management", "Premium materials"],
+    price: "Project-based quote",
   },
   {
-    icon: Sparkles,
-    title: "Artisan Workshops",
-    description: "Learn traditional crafting techniques from skilled artisans. Perfect for team building or creative exploration.",
-    features: ["Expert instructors", "All materials provided", "Groups up to 20 people", "Virtual options available"],
+    icon: Sofa,
+    title: "Upholstery & Reupholstery Services",
+    description: "Professional upholstery for sofas, chairs, and custom furniture. We restore, redesign, or upgrade pieces using quality fabrics and expert craftsmanship.",
+    features: ["Fabric selection", "Full restoration", "Custom redesign", "Expert craftsmanship"],
     price: "Contact for pricing",
   },
 ];

@@ -95,41 +95,6 @@ const About = () => {
           </div>
         </div>
       </section>
-
-      {/* Team Section */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="font-display text-3xl font-semibold text-foreground mb-4">
-            Meet the Team
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-12">
-            A small but passionate team dedicated to bringing you the best in artisan crafts.
-          </p>
-          <div className="grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            {[
-              { name: "Emma Chen", role: "Founder & Curator", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" },
-              { name: "Marcus Rivera", role: "Head of Artisan Relations", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" },
-              { name: "Sophie Laurent", role: "Creative Director", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400" },
-            ].map((member, index) => (
-              <div
-                key={member.name}
-                className="animate-slide-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover card-shadow"
-                />
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  {member.name}
-                </h3>
-                <p className="text-sm text-muted-foreground">{member.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </Layout>
   );
 };
