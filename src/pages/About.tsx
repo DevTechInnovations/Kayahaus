@@ -56,16 +56,12 @@ const About = () => {
                 Where Tradition Meets Modern Living
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                What started as a small passion project in 2018 has grown into a curated 
-                marketplace for handcrafted goods. We believe that every home deserves 
-                pieces that tell a story — objects crafted by human hands with techniques 
-                passed down through generations.
+                Kayahaus is a modern furniture brand specialising in custom-made, minimalist luxury couches and home furniture.
+                We focus on high-quality craftsmanship, clean contemporary designs, and comfort tailored to each client’s space.
+                All pieces re made to order, offering clients the freedom to customise fabrics, sizes, and finishes while maintaining a premium yet accessible price point.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our team travels the world to find artisans who share our commitment to 
-                quality and sustainability. From ceramic studios in Portugal to weaving 
-                cooperatives in Morocco, we partner directly with makers to bring you 
-                authentic, one-of-a-kind pieces.
+                Our mission is to deliver stylish, durable furniture with exceptional value, supported by personalised service, free delivery, and thoughtful extras that enhance the customer experience.
               </p>
             </div>
           </div>

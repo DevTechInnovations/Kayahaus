@@ -9,7 +9,7 @@ const services = [
     title: "Custom Creations",
     description: "Work with our artisans to design a unique piece tailored to your vision. From ceramics to textiles, we bring your ideas to life.",
     features: ["Personal consultation", "Design collaboration", "Handcrafted to order", "Unique, one-of-a-kind pieces"],
-    price: "Starting at $200",
+    price: "Contact for pricing",
   },
   {
     icon: Gift,
@@ -23,14 +23,14 @@ const services = [
     title: "Interior Styling",
     description: "Let our experts help you choose the perfect artisan pieces for your space. Virtual and in-person consultations available.",
     features: ["Room assessments", "Product recommendations", "Color & style matching", "Layout suggestions"],
-    price: "Starting at $150",
+    price: "Contact for pricing",
   },
   {
     icon: Sparkles,
     title: "Artisan Workshops",
     description: "Learn traditional crafting techniques from skilled artisans. Perfect for team building or creative exploration.",
     features: ["Expert instructors", "All materials provided", "Groups up to 20 people", "Virtual options available"],
-    price: "Starting at $75/person",
+    price: "Contact for pricing",
   },
 ];
 
