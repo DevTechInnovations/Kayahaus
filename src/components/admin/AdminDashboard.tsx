@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Package, MessageSquare, LogOut, Pencil, Trash2, ImageIcon, Tag, Palette, X } from "lucide-react";
+import { Plus, Package, MessageSquare, LogOut, Pencil, Trash2, ImageIcon, Tag, Palette, X, Star } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,7 @@ interface Product {
   created_at: string;
   is_special: boolean;
   special_price: number | null;
+  is_featured: boolean;
   fabrics?: ProductFabric[];
   colors?: ProductColor[];
 }
@@ -70,6 +71,7 @@ export const AdminDashboard = () => {
     images: [] as string[],
     is_special: false,
     special_price: "",
+    is_featured: false,
   });
 
   // Fabrics and colors for the currently editing product
@@ -165,6 +167,7 @@ export const AdminDashboard = () => {
       images: [],
       is_special: false,
       special_price: "",
+      is_featured: false,
     });
     setFabrics([]);
     setColors([]);
@@ -195,6 +198,7 @@ export const AdminDashboard = () => {
       images: product.images || [],
       is_special: product.is_special,
       special_price: product.special_price?.toString() || "",
+      is_featured: product.is_featured,
     });
     await fetchProductFabricsAndColors(product.id);
     setShowProductForm(true);
@@ -326,6 +330,7 @@ export const AdminDashboard = () => {
       special_price: productForm.is_special && productForm.special_price 
         ? parseFloat(productForm.special_price) 
         : null,
+      is_featured: productForm.is_featured,
     };
 
     if (editingProduct) {
@@ -454,8 +459,14 @@ export const AdminDashboard = () => {
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           <h3 className="font-medium truncate">{product.name}</h3>
+                          {product.is_featured && (
+                            <Badge className="bg-primary text-primary-foreground shrink-0">
+                              <Star className="h-3 w-3 mr-1" />
+                              Featured
+                            </Badge>
+                          )}
                           {product.is_special && (
                             <Badge className="bg-destructive text-destructive-foreground shrink-0">
                               <Tag className="h-3 w-3 mr-1" />
@@ -568,8 +579,26 @@ export const AdminDashboard = () => {
                   </div>
                 </div>
 
+                {/* Featured Product Toggle */}
+                <div className="bg-primary/5 p-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-medium">Feature on Homepage</label>
+                      <p className="text-xs text-muted-foreground">
+                        Show this product in the featured products slider
+                      </p>
+                    </div>
+                    <Switch
+                      checked={productForm.is_featured}
+                      onCheckedChange={(checked) => 
+                        setProductForm({ ...productForm, is_featured: checked })
+                      }
+                    />
+                  </div>
+                </div>
+
                 {/* Special/Sale Toggle */}
-                <div className="bg-muted/50 rounded-lg p-4 space-y-4">
+                <div className="bg-muted/50 p-4 space-y-4">
                   <div className="flex items-center justify-between">
                     <div>
                       <label className="text-sm font-medium">Mark as Special/Sale</label>
