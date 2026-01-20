@@ -275,37 +275,24 @@ const Index = () => {
               <p className="text-muted-foreground max-w-xl mx-auto">Discover our most loved handcrafted pieces.</p>
             </div>
             
-            {/* Mobile Carousel */}
-            <div className="md:hidden">
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent className="-ml-2">
-                  {featuredProducts.slice(0, 8).map((product) => (
-                    <CarouselItem key={product.id} className="pl-2 basis-[85%]">
-                      <ProductCard product={product} onClick={setSelectedProduct} />
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-0 -translate-x-1/2" />
-                <CarouselNext className="right-0 translate-x-1/2" />
-              </Carousel>
-            </div>
-
-            {/* Desktop Grid */}
-            <div className="hidden md:block">
-              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                {featuredProducts.slice(0, 8).map((product, index) => (
-                  <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+            {/* Products Carousel */}
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {featuredProducts.slice(0, 8).map((product) => (
+                  <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
                     <ProductCard product={product} onClick={setSelectedProduct} />
-                  </div>
+                  </CarouselItem>
                 ))}
-              </div>
-            </div>
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-6" />
+              <CarouselNext className="hidden sm:flex -right-4 lg:-right-6" />
+            </Carousel>
             
             <div className="text-center mt-12">
               <Link to="/products"><Button variant="outline" size="lg" className="gap-2">View All Products<ArrowRight className="h-4 w-4" /></Button></Link>
