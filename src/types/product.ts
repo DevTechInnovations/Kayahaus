@@ -33,6 +33,7 @@ export interface Product {
   reviews: Review[];
   is_special: boolean;
   special_price: number | null;
+  is_featured: boolean;
   fabrics?: ProductFabric[];
   colors?: ProductColor[];
 }

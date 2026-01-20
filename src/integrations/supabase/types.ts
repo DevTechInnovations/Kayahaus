@@ -130,6 +130,7 @@ export type Database = {
           description: string | null
           id: string
           images: string[] | null
+          is_featured: boolean
           is_special: boolean
           name: string
           price: number
@@ -144,6 +145,7 @@ export type Database = {
           description?: string | null
           id?: string
           images?: string[] | null
+          is_featured?: boolean
           is_special?: boolean
           name: string
           price?: number
@@ -158,6 +160,7 @@ export type Database = {
           description?: string | null
           id?: string
           images?: string[] | null
+          is_featured?: boolean
           is_special?: boolean
           name?: string
           price?: number
