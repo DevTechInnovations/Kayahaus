@@ -240,7 +240,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 								a: "You can place an order via WhatsApp, Instagram DM, or our website enquiry form. Our team will assist you from design to final confirmation.",
 							},
 							{
-								q: "Are your products handmade?",
+								q: "Is a deposit required?",
 								a: "Yes. A 50% deposit is required to secure your order, with the balance payable before delivery or installation.",
 							},
 						].map((faq, index) => (
