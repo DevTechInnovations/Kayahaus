@@ -198,25 +198,37 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
             </div>
 
             <div className="flex items-center gap-2 mb-4 flex-wrap">
-  {product.is_special && product.special_price ? (
-    <>
-      <p className="text-2xl font-semibold text-destructive">
-        R{Number(product.special_price).toFixed(2)}
-      </p>
-      <p className="text-lg text-muted-foreground line-through">
-        R{Number(product.price).toFixed(2)}
-      </p>
-      {product.is_special && (
-        <Badge className="ml-2 bg-destructive text-destructive-foreground">
-          {Math.round((1 - Number(product.special_price) / Number(product.price)) * 100)}% OFF
-        </Badge>
-      )}
-    </>
-  ) : (
-    <p className="text-2xl font-semibold text-foreground">
-      R{Number(product.price).toFixed(2)}
-    </p>
-  )}
+  {(() => {
+    // Determine which price to display
+    const sizePrice = selectedSize?.price;
+    const basePrice = product.is_special && product.special_price ? product.special_price : product.price;
+    const displayPrice = sizePrice !== null && sizePrice !== undefined ? sizePrice : basePrice;
+    const originalPrice = sizePrice !== null && sizePrice !== undefined ? null : (product.is_special ? product.price : null);
+    const showDiscount = product.is_special && product.special_price && !sizePrice;
+    
+    return (
+      <>
+        <p className={`text-2xl font-semibold ${showDiscount ? "text-destructive" : "text-foreground"}`}>
+          R{Number(displayPrice).toFixed(2)}
+        </p>
+        {originalPrice && (
+          <p className="text-lg text-muted-foreground line-through">
+            R{Number(originalPrice).toFixed(2)}
+          </p>
+        )}
+        {showDiscount && (
+          <Badge className="ml-2 bg-destructive text-destructive-foreground">
+            {Math.round((1 - Number(product.special_price) / Number(product.price)) * 100)}% OFF
+          </Badge>
+        )}
+        {sizePrice !== null && sizePrice !== undefined && (
+          <Badge variant="outline" className="ml-2">
+            {selectedSize?.name} price
+          </Badge>
+        )}
+      </>
+    );
+  })()}
 </div>
 
             <div className="flex items-center gap-2 mb-6">
@@ -299,15 +311,22 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
                     <button
                       key={size.id}
                       onClick={() => setSelectedSize(size)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${
+                      className={`flex flex-col items-center px-4 py-2 rounded-lg border transition-all ${
                         selectedSize?.id === size.id
                           ? "border-primary bg-primary/10 ring-2 ring-primary/20"
                           : "border-border hover:border-primary/50"
                       }`}
                     >
-                      <span className="text-sm font-medium">{size.name}</span>
-                      {selectedSize?.id === size.id && (
-                        <Check className="h-4 w-4 text-primary" />
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium">{size.name}</span>
+                        {selectedSize?.id === size.id && (
+                          <Check className="h-4 w-4 text-primary" />
+                        )}
+                      </div>
+                      {size.price !== null && (
+                        <span className="text-xs text-muted-foreground mt-0.5">
+                          R{Number(size.price).toFixed(2)}
+                        </span>
                       )}
                     </button>
                   ))}

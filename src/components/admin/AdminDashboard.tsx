@@ -30,6 +30,7 @@ interface ProductSize {
   id: string;
   product_id: string;
   name: string;
+  price: number | null;
 }
 
 interface Product {
@@ -87,7 +88,7 @@ export const AdminDashboard = () => {
   const [sizes, setSizes] = useState<ProductSize[]>([]);
   const [newFabric, setNewFabric] = useState({ name: "", image_url: "" });
   const [newColor, setNewColor] = useState({ name: "", hex_code: "#000000" });
-  const [newSize, setNewSize] = useState({ name: "" });
+  const [newSize, setNewSize] = useState({ name: "", price: "" });
   const [uploadingFabricImage, setUploadingFabricImage] = useState(false);
 
   useEffect(() => {
@@ -183,7 +184,7 @@ export const AdminDashboard = () => {
     setSizes([]);
     setNewFabric({ name: "", image_url: "" });
     setNewColor({ name: "", hex_code: "#000000" });
-    setNewSize({ name: "" });
+    setNewSize({ name: "", price: "" });
     setEditingProduct(null);
     setShowProductForm(false);
   };
@@ -338,6 +339,7 @@ export const AdminDashboard = () => {
       .insert({
         product_id: editingProduct.id,
         name: newSize.name,
+        price: newSize.price ? parseFloat(newSize.price) : null,
       })
       .select()
       .single();
@@ -347,7 +349,7 @@ export const AdminDashboard = () => {
       console.error(error);
     } else {
       setSizes([...sizes, data]);
-      setNewSize({ name: "" });
+      setNewSize({ name: "", price: "" });
       toast.success("Size added");
     }
   };
@@ -872,6 +874,9 @@ export const AdminDashboard = () => {
                         {sizes.map((size) => (
                           <div key={size.id} className="flex items-center gap-2 bg-card rounded-lg p-2 pr-3">
                             <span className="text-sm font-medium">{size.name}</span>
+                            {size.price !== null && (
+                              <span className="text-xs text-muted-foreground">R{Number(size.price).toFixed(2)}</span>
+                            )}
                             <button
                               type="button"
                               onClick={() => handleDeleteSize(size.id)}
@@ -892,6 +897,17 @@ export const AdminDashboard = () => {
                           value={newSize.name}
                           onChange={(e) => setNewSize({ ...newSize, name: e.target.value })}
                           placeholder="e.g. Small, Medium, Large, XL, King, Queen"
+                        />
+                      </div>
+                      <div className="w-28">
+                        <label className="text-xs text-muted-foreground mb-1 block">Price (optional)</label>
+                        <Input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          value={newSize.price}
+                          onChange={(e) => setNewSize({ ...newSize, price: e.target.value })}
+                          placeholder="R0.00"
                         />
                       </div>
                       <Button type="button" size="sm" onClick={handleAddSize}>

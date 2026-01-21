@@ -26,6 +26,7 @@ export interface ProductSize {
   id: string;
   product_id: string;
   name: string;
+  price: number | null;
   created_at: string;
 }
 
