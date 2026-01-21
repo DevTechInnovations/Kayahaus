@@ -2,12 +2,19 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Truck, Shield, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Sparkles, Truck, Shield, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ProductModal } from "@/components/products/ProductModal";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { Product } from "@/types/product";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 // Import your images or use paths
 import hero1 from "..//components/images//WhatsApp Image 2026-01-08 at 10.31.02.jpeg"
@@ -17,7 +24,7 @@ import hero4 from "..//components/images/WhatsApp Image 2026-01-08 at 10.30.34.j
 const features = [
   { icon: Sparkles, title: "Handcrafted Quality", description: "Every piece is made with care by skilled artisans." },
   { icon: Truck, title: "Free Shipping", description: "Complimentary shipping on orders over R10 000." },
-  { icon: Shield, title: "Secure Checkout", description: "Your payment information is always protected." },
+  { icon: MessageCircle, title: "Free Consultation",description: "Expert advice before you order." },
 ];
 
 const slides = [
@@ -39,15 +46,15 @@ const slides = [
     buttonText: "Our Materials",
     buttonLink: "/about#materials"
   },
-  {
-    id: 3,
-    title: "Artisan",
-    highlight: "Stories",
-    description: "Meet the makers behind our products and learn about their traditions and techniques.",
-    image: hero3, 
-    buttonText: "Meet Our Artisans",
-    buttonLink: "/about#artisans"
-  },
+ {
+  id: 3,
+  title: "Tailored",
+  highlight: "Solutions",
+  description: "Custom designs crafted to match your unique vision and space perfectly.",
+  image: hero3, 
+  buttonText: "Explore Custom Services",
+  buttonLink: "/services"
+},
   {
     id: 4,
     title: "Limited Edition",
@@ -268,18 +275,24 @@ const Index = () => {
               <p className="text-muted-foreground max-w-xl mx-auto">Discover our most loved handcrafted pieces.</p>
             </div>
             
-            {/* Featured Products Slider */}
-            <div className="relative">
-              <div className="overflow-hidden">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-                  {featuredProducts.slice(0, 8).map((product, index) => (
-                    <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
-                      <ProductCard product={product} onClick={setSelectedProduct} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            {/* Products Carousel */}
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {featuredProducts.slice(0, 8).map((product) => (
+                  <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    <ProductCard product={product} onClick={setSelectedProduct} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex -left-4 lg:-left-6" />
+              <CarouselNext className="hidden sm:flex -right-4 lg:-right-6" />
+            </Carousel>
             
             <div className="text-center mt-12">
               <Link to="/products"><Button variant="outline" size="lg" className="gap-2">View All Products<ArrowRight className="h-4 w-4" /></Button></Link>
