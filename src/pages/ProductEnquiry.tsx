@@ -34,6 +34,8 @@ const ProductEnquiry = () => {
   const [searchParams] = useSearchParams();
   const selectedFabric = searchParams.get("fabric");
   const selectedColor = searchParams.get("color");
+  const selectedSize = searchParams.get("size"); // ADD
+  const selectedSizePrice = searchParams.get("sizePrice"); // ADD
   
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -129,7 +131,7 @@ const ProductEnquiry = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/product-enquiry", {
+      const response = await fetch("https://server.kayahaus.co.za/api/product-enquiry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -142,6 +144,8 @@ const ProductEnquiry = () => {
           },
           color: selectedColor || null,
           fabric: selectedFabric || null,
+          size: selectedSize || null,           // ADD
+          sizePrice: selectedSizePrice || null, // ADD
         }),
       });
 
@@ -246,8 +250,14 @@ const ProductEnquiry = () => {
                 </span>
               </div>
 
+              {/* Update price display to show size price if available */}
               <p className="text-2xl font-semibold text-foreground">
-                R{Number(product.price).toFixed(2)}
+                R{Number(selectedSizePrice || product.price).toFixed(2)}
+                {selectedSizePrice && (
+                  <span className="text-sm text-muted-foreground ml-2">
+                    (Size: {selectedSize})
+                  </span>
+                )}
               </p>
 
               <div className="flex items-center gap-2">
@@ -267,8 +277,8 @@ const ProductEnquiry = () => {
                 </p>
               )}
 
-              {/* Selected Options */}
-              {(selectedFabric || selectedColor) && (
+              {/* Update Selected Options to include size */}
+              {(selectedFabric || selectedColor || selectedSize) && (
                 <div className="bg-muted p-4 space-y-2">
                   <p className="text-sm font-medium">Selected Options:</p>
                   <div className="flex flex-wrap gap-2">
@@ -277,6 +287,12 @@ const ProductEnquiry = () => {
                     )}
                     {selectedColor && (
                       <Badge variant="secondary">Color: {selectedColor}</Badge>
+                    )}
+                    {selectedSize && (
+                      <Badge variant="secondary">
+                        Size: {selectedSize}
+                        {selectedSizePrice && ` (R${Number(selectedSizePrice).toFixed(2)})`}
+                      </Badge>
                     )}
                   </div>
                 </div>

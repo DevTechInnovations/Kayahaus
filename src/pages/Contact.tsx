@@ -37,7 +37,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 	e.preventDefault();
 
 	try {
-		const response = await fetch("http://localhost:5000/api/contact", {
+		const response = await fetch("https://server.kayahaus.co.za/api/contact", {
 			method: "POST", // ✅ REQUIRED
 			headers: {
 				"Content-Type": "application/json",

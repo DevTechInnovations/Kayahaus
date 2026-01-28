@@ -344,6 +344,7 @@ export const ProductModal = ({ product, onClose }: ProductModalProps) => {
                   if (selectedFabric) params.set("fabric", selectedFabric.name);
                   if (selectedColor) params.set("color", selectedColor.name);
                   if (selectedSize) params.set("size", selectedSize.name);
+                   params.set("sizePrice", selectedSize.price?.toString() || "");
                   navigate(`/enquire/${product.id}${params.toString() ? `?${params.toString()}` : ""}`);
                 }}
               >
