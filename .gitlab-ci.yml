@@ -22,7 +22,7 @@ deploy_via_ftp:
   stage: deploy
   image: alpine:latest
   dependencies:
-    - build_app   # <-- ensures artifacts from build_app are available
+    - build_app   
   before_script:
     - apk add --no-cache lftp
   script:
