@@ -76,12 +76,12 @@ export const Navbar = () => {
 
             {/* Actions */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/admin">
+              {/* <Link to="/admin">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="h-4 w-4" />
-                  Admin
+                  
                 </Button>
-              </Link>
+              </Link> */}
             </div>
 
             {/* Mobile Menu Button */}
