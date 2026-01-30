@@ -50,6 +50,8 @@ interface Product {
   sizes?: ProductSize[];
 }
 
+// Comment out Enquiry interface since we're not using it
+/*
 interface Enquiry {
   id: string;
   product_name: string;
@@ -60,11 +62,13 @@ interface Enquiry {
   status: string;
   created_at: string;
 }
+*/
 
 export const AdminDashboard = () => {
   const { user, signOut } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
-  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  // Comment out enquiries state since we're not using it
+  // const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -93,7 +97,8 @@ export const AdminDashboard = () => {
 
   useEffect(() => {
     fetchProducts();
-    fetchEnquiries();
+    // Comment out fetching enquiries since we're not using it
+    // fetchEnquiries();
   }, []);
 
   const fetchProducts = async () => {
@@ -111,6 +116,8 @@ export const AdminDashboard = () => {
     setIsLoading(false);
   };
 
+  // Comment out fetchEnquiries function since we're not using it
+  /*
   const fetchEnquiries = async () => {
     const { data, error } = await supabase
       .from("enquiries")
@@ -123,6 +130,7 @@ export const AdminDashboard = () => {
       setEnquiries(data || []);
     }
   };
+  */
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -434,6 +442,8 @@ export const AdminDashboard = () => {
     }
   };
 
+  // Comment out handleUpdateEnquiryStatus since we're not using it
+  /*
   const handleUpdateEnquiryStatus = async (id: string, status: string) => {
     const { error } = await supabase
       .from("enquiries")
@@ -447,6 +457,7 @@ export const AdminDashboard = () => {
       fetchEnquiries();
     }
   };
+  */
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -470,10 +481,13 @@ export const AdminDashboard = () => {
             <Package className="h-4 w-4" />
             Products ({products.length})
           </TabsTrigger>
+          {/* Comment out the Enquiries tab trigger */}
+          {/*
           <TabsTrigger value="enquiries" className="gap-2">
             <MessageSquare className="h-4 w-4" />
             Enquiries ({enquiries.length})
           </TabsTrigger>
+          */}
         </TabsList>
 
         {/* Products Tab */}
@@ -936,7 +950,8 @@ export const AdminDashboard = () => {
           )}
         </TabsContent>
 
-        {/* Enquiries Tab */}
+        {/* Comment out the Enquiries tab content */}
+        {/*
         <TabsContent value="enquiries" className="space-y-4">
           {enquiries.length === 0 ? (
             <div className="text-center py-12 bg-muted rounded-lg">
@@ -995,6 +1010,7 @@ export const AdminDashboard = () => {
             ))
           )}
         </TabsContent>
+        */}
       </Tabs>
     </div>
   );

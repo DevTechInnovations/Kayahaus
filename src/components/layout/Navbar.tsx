@@ -76,12 +76,15 @@ export const Navbar = () => {
 
             {/* Actions */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* <Link to="/admin">
+              {/* Admin Login button commented out for desktop */}
+              {/*
+              <Link to="/admin">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <User className="h-4 w-4" />
-                  
+                  Admin Login
                 </Button>
-              </Link> */}
+              </Link>
+              */}
             </div>
 
             {/* Mobile Menu Button */}
@@ -120,12 +123,15 @@ export const Navbar = () => {
                     )}
                   </Link>
                 ))}
+                {/* Admin Login button commented out for mobile */}
+                {/*
                 <Link to="/admin" onClick={() => setIsOpen(false)}>
                   <Button variant="outline" size="sm" className="w-full gap-2">
                     <User className="h-4 w-4" />
                     Admin Login
                   </Button>
                 </Link>
+                */}
               </div>
             </div>
           )}
